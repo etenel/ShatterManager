@@ -210,7 +210,7 @@ shatterManager
     .start()
 ```
 
-更多详情请看 Demo 或者源码，或者通过文章 [《Android 复杂业务碎片化管理方案》](https://juejin.cn/spost/7336750909508206604)  了解更多背景。
+更多详情请看 Demo 或者源码，或者通过文章 [《Android 复杂业务碎片化管理方案》](https://juejin.cn/post/7336750909508206604)  了解更多背景。
 
 有问题可随时交流。
 
