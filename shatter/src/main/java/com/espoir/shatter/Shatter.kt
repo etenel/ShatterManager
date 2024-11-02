@@ -6,14 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.coroutineScope
 import androidx.viewbinding.ViewBinding
 
-open class Shatter : ShatterLifecycleListener, LifecycleOwner {
+open class Shatter(override val lifecycle: Lifecycle) : ShatterLifecycleListener, LifecycleOwner{
 
     companion object {
         const val NO_LAYOUT = 0
@@ -21,10 +21,10 @@ open class Shatter : ShatterLifecycleListener, LifecycleOwner {
 
     var shatterManager: ShatterManager? = null
     var containView: View? = null
-    private var act: AppCompatActivity? = null
-    val activity: AppCompatActivity
+    private var act: FragmentActivity? = null
+    val activity: FragmentActivity
         get() = if (act == null) {
-            GlobalShatterActivity.INSTANCE.currentActivity as AppCompatActivity
+            GlobalShatterActivity.INSTANCE.currentActivity as FragmentActivity
         } else act!!
 
     val lifecycleScope: LifecycleCoroutineScope
@@ -32,7 +32,6 @@ open class Shatter : ShatterLifecycleListener, LifecycleOwner {
 
     @PublishedApi
     internal var viewBinding: ViewBinding? = null
-
     inline fun <reified B : ViewBinding> getBinding(): B {
         return if (viewBinding == null) {
             val method = B::class.java.getMethod("bind", View::class.java)
@@ -44,7 +43,7 @@ open class Shatter : ShatterLifecycleListener, LifecycleOwner {
         }
     }
 
-    fun attachActivity(activity: AppCompatActivity?) {
+    fun attachActivity(activity: FragmentActivity?) {
         onAttachActivity(activity)
         if (getLayoutResId() != NO_LAYOUT && containView != null) {
             if (containView is ViewGroup) {
@@ -55,7 +54,7 @@ open class Shatter : ShatterLifecycleListener, LifecycleOwner {
         }
     }
 
-    fun onAttachActivity(activity: AppCompatActivity?) {
+    fun onAttachActivity(activity: FragmentActivity?) {
         this.act = activity
     }
 
@@ -143,7 +142,4 @@ open class Shatter : ShatterLifecycleListener, LifecycleOwner {
         activity.startActivity(intent)
     }
 
-    override fun getLifecycle(): Lifecycle {
-        return activity.lifecycle
-    }
 }

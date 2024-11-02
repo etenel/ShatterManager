@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Intent
 import android.view.View
 import androidx.annotation.IdRes
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class ShatterManager(internal val activity: AppCompatActivity) : LifecycleEventObserver {
+class ShatterManager(private val activity: FragmentActivity) : LifecycleEventObserver {
 
     internal val shatters = mutableListOf<Shatter>()
     private var activityWatcher = ShatterActivityWatcher(activity)
