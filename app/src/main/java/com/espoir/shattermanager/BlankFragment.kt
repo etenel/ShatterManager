@@ -9,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -34,6 +35,7 @@ import androidx.lifecycle.Lifecycle
 import com.espoir.shatter.fragment.FmShatter
 import com.espoir.shatter.fragment.FmShatterManager
 import com.espoir.shatter.fragment.IShatterFragment
+import com.espoir.shattermanager.compose.ShatterCompose
 import com.espoir.shattermanager.databinding.FragmentBlankBinding
 import com.espoir.shattermanager.databinding.LayoutShatterABinding
 import kotlinx.coroutines.launch
@@ -153,22 +155,3 @@ class ShatterDF(lifecycle: Lifecycle) : FmShatter(lifecycle) {
     }
 }
 
-@Composable
-fun ShatterCompose() {
-    var text by remember { mutableStateOf("ShatterCompose") }
-    Column(modifier = Modifier.fillMaxWidth().background(colorResource(R.color.teal_700)), horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text, color = colorResource(R.color.purple_500), fontSize = 12.sp)
-        Button(modifier = Modifier
-            .size(200.dp,100.dp), colors = ButtonDefaults.buttonColors(containerColor = Color.White), shape = RectangleShape, onClick = {
-            text = "click"
-        }) {
-            Text("点击改变ssdfddg",  fontSize = 16.sp, color = Color.Cyan, fontFamily = FontFamily.SansSerif, fontWeight = FontWeight(800))
-        }
-    }
-}
-
-@Preview
-@Composable
-fun Pre() {
-    ShatterCompose()
-}
