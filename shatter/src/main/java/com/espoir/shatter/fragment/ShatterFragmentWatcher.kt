@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentManager.FragmentLifecycleCallbacks
+import com.espoir.shatter.LogUtils
 
 class ShatterFragmentWatcher(val curFra: Fragment) {
     companion object {
@@ -14,13 +15,7 @@ class ShatterFragmentWatcher(val curFra: Fragment) {
     private val lifecycleCallbacks = object : FragmentLifecycleCallbacks() {
 
 
-        override fun onFragmentCreated(
-            fm: FragmentManager,
-            f: Fragment,
-            savedInstanceState: Bundle?
-        ) {
-            GlobaIShatterFragment.INSTANCE.fragment = f
-        }
+
 
 
         override fun onFragmentViewCreated(
@@ -40,6 +35,7 @@ class ShatterFragmentWatcher(val curFra: Fragment) {
                         )
                     }
                 }
+                LogUtils.i("onFragmentViewCreated")
             }
         }
 
@@ -50,6 +46,8 @@ class ShatterFragmentWatcher(val curFra: Fragment) {
                         it.onFragmentStarted(fm, f)
                     }
                 }
+                LogUtils.i("onFragmentStarted")
+
             }
         }
 
@@ -58,6 +56,8 @@ class ShatterFragmentWatcher(val curFra: Fragment) {
                 dispatch { fmShatterManager -> fmShatterManager.shatters.forEach {
                     it.onFragmentResumed(fm,f)
                 } }
+                LogUtils.i("onFragmentResumed")
+
             }
         }
 
@@ -66,6 +66,7 @@ class ShatterFragmentWatcher(val curFra: Fragment) {
                 dispatch { fmShatterManager: FmShatterManager -> fmShatterManager.shatters.forEach {
                     it.onFragmentPaused(fm, f)
                 } }
+                LogUtils.i("onFragmentPaused")
             }
         }
 
@@ -74,6 +75,7 @@ class ShatterFragmentWatcher(val curFra: Fragment) {
                 dispatch { fmShatterManager -> fmShatterManager.shatters.forEach {
                     it.onFragmentStopped(fm, f)
                 } }
+                LogUtils.i("onFragmentStopped")
             }
         }
 
@@ -86,6 +88,7 @@ class ShatterFragmentWatcher(val curFra: Fragment) {
                 dispatch { fmShatterManager -> fmShatterManager.shatters.forEach {
                     it.onFragmentSaveInstanceState(fm, f,outState)
                 } }
+                LogUtils.i("onFragmentSaveInstanceState")
             }
         }
 
@@ -94,6 +97,8 @@ class ShatterFragmentWatcher(val curFra: Fragment) {
                 dispatch { fmShatterManager -> fmShatterManager.shatters.forEach {
                     it.onFragmentViewDestroyed(fm, f)
                 } }
+                LogUtils.i("onFragmentViewDestroyed")
+
             }
         }
 
@@ -102,13 +107,15 @@ class ShatterFragmentWatcher(val curFra: Fragment) {
                 dispatch { fmShatterManager -> fmShatterManager.shatters.forEach {
                     it.onFragmentDestroyed(fm, f)
                 } }
+                LogUtils.i("onFragmentDestroyed")
+
             }
         }
 
     }
 
 fun onDestroy(){
-    GlobaIShatterFragment.INSTANCE.fragment=null
+    GlobalIShatterFragment.INSTANCE.fragment=null
     dispatch {
         fmShatterManager -> fmShatterManager.shatters.forEach { it.onDestroy() }
     }
@@ -120,11 +127,11 @@ fun onDestroy(){
     }
 
     fun install() {
-        GlobaIShatterFragment.INSTANCE.registerFragmentLifecycleCallbacks(lifecycleCallbacks)
+        GlobalIShatterFragment.INSTANCE.registerFragmentLifecycleCallbacks(lifecycleCallbacks)
     }
 
     fun uninstall() {
-        GlobaIShatterFragment.INSTANCE.unregisterFragmentLifecycleCallbacks(lifecycleCallbacks)
+        GlobalIShatterFragment.INSTANCE.unregisterFragmentLifecycleCallbacks(lifecycleCallbacks)
     }
 
 }

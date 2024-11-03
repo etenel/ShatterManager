@@ -28,6 +28,7 @@ class FmShatterManager(private val fragment: Fragment) : LifecycleEventObserver 
     internal val dataSaveMap = hashMapOf<String, Any?>()
 
   init {
+      GlobalIShatterFragment.INSTANCE.fragment=fragment
       fragment.viewLifecycleOwner.lifecycle.removeObserver(this)
       fragment.viewLifecycleOwner.lifecycle.addObserver(this)
       fragmentWatcher.install()
@@ -114,6 +115,7 @@ class FmShatterManager(private val fragment: Fragment) : LifecycleEventObserver 
         shatterCache.clear()
         dataSaveMap.clear()
         shatters.clear()
+        GlobalIShatterFragment.INSTANCE.fragment=null
     }
 
 }

@@ -31,7 +31,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
+import com.espoir.shatter.LogUtils
 import com.espoir.shatter.fragment.FmShatter
 import com.espoir.shatter.fragment.FmShatterManager
 import com.espoir.shatter.fragment.IShatterFragment
@@ -119,6 +121,10 @@ class BlankFragment : Fragment(), IShatterFragment {
 class ShatterFM(lifecycle: Lifecycle) : FmShatter(lifecycle) {
     override fun getLayoutResId(): Int = R.layout.layout_shatter_a
     private lateinit var binding: LayoutShatterABinding
+    override fun onFragmentStarted(fm: FragmentManager, f: Fragment) {
+        super.onFragmentStarted(fm, f)
+        LogUtils.v("onFragmentStarted")
+    }
     override fun initView(view: View?, bundle: Bundle?) {
         super.initView(view, bundle)
         binding = LayoutShatterABinding.bind(view!!)

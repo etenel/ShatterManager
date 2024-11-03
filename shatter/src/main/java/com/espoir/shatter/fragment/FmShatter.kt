@@ -22,10 +22,9 @@ open class FmShatter(override val lifecycle: Lifecycle) : FmShatterLifecycleList
     var shatterManager: FmShatterManager? = null
     var containView: View? = null
     private var fra: Fragment? = null
-    private var fragmentManager: FragmentManager? = null
     val fragment: Fragment
         get() = if (fra == null) {
-            GlobaIShatterFragment.INSTANCE.fragment as Fragment
+            GlobalIShatterFragment.INSTANCE.fragment as Fragment
         } else fra!!
 
      val lifecycleScope: LifecycleCoroutineScope get() = lifecycle.coroutineScope
@@ -85,10 +84,6 @@ open class FmShatter(override val lifecycle: Lifecycle) : FmShatterLifecycleList
 
 
 
-    override fun onFragmentCreated(fm: FragmentManager, f: Fragment, savedInstanceState: Bundle?) {
-        fragmentManager = fm
-    }
-
     override fun onFragmentViewCreated(
         fm: FragmentManager,
         f: Fragment,
@@ -123,12 +118,8 @@ open class FmShatter(override val lifecycle: Lifecycle) : FmShatterLifecycleList
     }
 
     override fun onFragmentDestroyed(fm: FragmentManager, f: Fragment) {
-        fragmentManager = null
     }
 
-    override fun onFragmentDetached(fm: FragmentManager, f: Fragment) {
-
-    }
 
     /**
      * 可以通知到fragment所在的activity

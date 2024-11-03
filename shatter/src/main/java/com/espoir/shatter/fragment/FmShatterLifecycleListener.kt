@@ -7,14 +7,6 @@ import androidx.fragment.app.FragmentManager
 
 interface FmShatterLifecycleListener {
 
-
-    fun onFragmentCreated(
-        fm: FragmentManager,
-        f: Fragment,
-        savedInstanceState: Bundle?
-    )
-
-
     fun onFragmentViewCreated(
         fm: FragmentManager,
         f: Fragment,
@@ -48,7 +40,6 @@ interface FmShatterLifecycleListener {
     fun onFragmentDestroyed(fm: FragmentManager, f: Fragment)
 
 
-    fun onFragmentDetached(fm: FragmentManager, f: Fragment)
 
 
 }

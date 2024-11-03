@@ -14,13 +14,13 @@ class ShatterActivityWatcher(val currAct: Activity) {
     private val lifecycleCallbacks = object : Application.ActivityLifecycleCallbacks {
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-            Log.i(TAG, "- onActivityCreated -")
+            LogUtils.i(TAG, "- onActivityCreated -")
             GlobalShatterActivity.INSTANCE.currentActivity = activity
         }
 
         override fun onActivityStarted(activity: Activity) {
             if (activity == currAct) {
-                Log.i(TAG, "- onActivityStarted -")
+                LogUtils.i(TAG, "- onActivityStarted -")
                 dispatch { it -> it.shatters.forEach { it.onStart() } }
             }
         }
@@ -28,57 +28,57 @@ class ShatterActivityWatcher(val currAct: Activity) {
         override fun onActivityResumed(activity: Activity) {
             GlobalShatterActivity.INSTANCE.currentActivity = activity
             if (activity == currAct) {
-                Log.i(TAG, "- onActivityResumed -")
+                LogUtils.i(TAG, "- onActivityResumed -")
                 dispatch { it -> it.shatters.forEach { it.onResume() } }
             }
         }
 
         override fun onActivityPaused(activity: Activity) {
             if (activity == currAct) {
-                Log.i(TAG, "- onActivityPaused -")
+                LogUtils.i(TAG, "- onActivityPaused -")
                 dispatch { it -> it.shatters.forEach { it.onPause() } }
             }
         }
 
         override fun onActivityStopped(activity: Activity) {
             if (activity == currAct) {
-                Log.i(TAG, "- onActivityStopped -")
+                LogUtils.i(TAG, "- onActivityStopped -")
                 dispatch { it -> it.shatters.forEach { it.onStop() } }
             }
         }
 
         override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
             if (activity == currAct) {
-                Log.i(TAG, "- onActivitySaveInstanceState -")
+                LogUtils.i(TAG, "- onActivitySaveInstanceState -")
                 dispatch { it -> it.shatters.forEach { it.onSaveInstanceState(outState) } }
             }
         }
 
         override fun onActivityDestroyed(activity: Activity) {
             if (activity == currAct) {
-                Log.i(TAG, "- onActivityDestroyed -")
+                LogUtils.i(TAG, "- onActivityDestroyed -")
                 dispatch { it -> it.shatters.forEach { it.onDestroy() } }
             }
         }
     }
 
     fun onNewIntent(intent: Intent?) {
-        Log.i(TAG, "- onNewIntent -")
+        LogUtils.i(TAG, "- onNewIntent -")
         dispatch { it -> it.shatters.forEach { it.onNewIntent(intent) } }
     }
 
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        Log.i(TAG, "- onActivityResult -")
+        LogUtils.i(TAG, "- onActivityResult -")
         dispatch { it -> it.shatters.forEach { it.onActivityResult(requestCode, resultCode, data) } }
     }
 
     fun onRestart() {
-        Log.i(TAG, "- onRestart -")
+        LogUtils.i(TAG, "- onRestart -")
         dispatch { it -> it.shatters.forEach { it.onRestart() } }
     }
 
     fun onDestroy() {
-        Log.i(TAG, "- onDestroy -")
+        LogUtils.i(TAG, "- onDestroy -")
         GlobalShatterActivity.INSTANCE.currentActivity = null
         dispatch { it -> it.shatters.forEach { it.onDestroy() } }
     }
